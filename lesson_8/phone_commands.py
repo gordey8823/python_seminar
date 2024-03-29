@@ -90,7 +90,26 @@ def write_file(file_name, lst):
         f_writer.writerows(res)
 
 
+def copy_line(file_name, copy_file_name):
+    while True:
+        try:
+            line_number = int(input('Введите номер строки, которую нужно скопировать: '))
+            res = read_file(file_name)
+            if len(res) < line_number:
+                print("Такой строки нет")
+                continue
+            else:
+                write_file(copy_file_name, list(res[line_number - 1].values()))
+                break
+        except ValueError:
+            print("Невалидный номер строки")
+
+
+
+
+
 file_name = 'phone.csv'
+copy_file_name = 'copy_phones.csv'
 
 
 def main():
@@ -107,6 +126,10 @@ def main():
                 print("Файл отсутствует. Создайте его")
                 continue
             print(*read_file(file_name))
+        elif command == 'c':
+            if not exists(copy_file_name):
+                create_file(copy_file_name)
+            copy_line(file_name, copy_file_name)
 
 
 main()
